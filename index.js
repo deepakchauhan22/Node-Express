@@ -2,35 +2,38 @@ const express = require('express');
 const http =require('http');
 const morgan =require('morgan');
 const bodyParser = require('body-parser');
+const dishRouter = require('./router/dishRouter')
 const hostname = 'localhost';
 const port =3000;
 const app=express();
 app.use(morgan('dev')) ;
 app.use(bodyParser.json());
-//Rest endpoint setup
-app.all('/dishes', (req,res,next)=>{
-    //here inside we handle incoming request
-    res.statusCode =200;
-    res.setHeader('Content-type','text/plain');
-    next();
-})
+app.use('/dishes',dishRouter) //this means any request coming to /dishs endpoint will be hanled by dish router
 
-app.get('/dishes',(req,res,next)=>{
-    res.end('Here are all the dishes.');
-})
+                            // Normal Rest endpoint setup
+                            // app.all('/dishes', (req,res,next)=>{
+                                //here inside we handle incoming request
+                            //     res.statusCode =200;
+                            //     res.setHeader('Content-type','text/plain');
+                            //     next();
+                            // });
 
-app.post('/dishes',(req,res,next)=>{
-    res.end("Added "+req.body.name+ ' Dish '+ req.body.description);
-})
+                            // app.get('/dishes',(req,res,next)=>{
+                            //     res.end('Here are all the dishes.');
+                            // });
 
-app.put('/dishes',(req,res,next)=>{
-    res.end("Your Update(put) is Not Supported");
-    res.statusCode =200;
-})
+                            // app.post('/dishes',(req,res,next)=>{
+                            //     res.end("Added "+req.body.name+ ' Dish '+ req.body.description);
+                            // });
 
-app.delete('/dishes',(req,res,next)=>{
-    res.end('Deleting All Dishes');
-})
+                            // app.put('/dishes',(req,res,next)=>{
+                            //     res.end("Your Update(put) is Not Supported");
+                            //     res.statusCode =200;
+                            // });
+
+                            // app.delete('/dishes',(req,res,next)=>{
+                            //     res.end('Deleting All Dishes');
+                            // });
 
 app.get('/dishes/:dishId',(req,res,next)=>{
     res.end('Will send details of' + req.params.dishId);
