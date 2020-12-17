@@ -3,13 +3,16 @@ const http =require('http');
 const morgan =require('morgan');
 const bodyParser = require('body-parser');
 const dishRouter = require('./router/dishRouter')
+const promoRouter = require('./router/promoRouter')
+const leaderRouter = require('./router/leaderRouter')
 const hostname = 'localhost';
 const port =3000;
 const app=express();
 app.use(morgan('dev')) ;
 app.use(bodyParser.json());
 app.use('/dishes',dishRouter) //this means any request coming to /dishs endpoint will be hanled by dish router
-
+app.use('/promotions',promoRouter) 
+app.use('/leaders',leaderRouter) 
                             // Normal Rest endpoint setup
                             // app.all('/dishes', (req,res,next)=>{
                                 //here inside we handle incoming request
@@ -35,23 +38,23 @@ app.use('/dishes',dishRouter) //this means any request coming to /dishs endpoint
                             //     res.end('Deleting All Dishes');
                             // });
 
-app.get('/dishes/:dishId',(req,res,next)=>{
-    res.end('Will send details of' + req.params.dishId);
-})
+                            // app.get('/dishes/:dishId',(req,res,next)=>{
+                            //     res.end('Will send details of' + req.params.dishId);
+                            // })
 
-app.post('/dishes/:dishId',(req,res,next)=>{
-    res.statusCode =403;
-    res.end("Your post is not supported on"+ req.params.dishId);
-})
+                            // app.post('/dishes/:dishId',(req,res,next)=>{
+                            //     res.statusCode =403;
+                            //     res.end("Your post is not supported on"+ req.params.dishId);
+                            // })
 
-app.put('/dishes/:dishId',(req,res,next)=>{
-    res.write('Updating DISH '+ req.params.dishId +'\n');
-    res.end("Your Update(put) is done "+ req.body.name);
-})
+                            // app.put('/dishes/:dishId',(req,res,next)=>{
+                            //     res.write('Updating DISH '+ req.params.dishId +'\n');
+                            //     res.end("Your Update(put) is done "+ req.body.name);
+                            // })
 
-app.delete('/dishes/:dishId',(req,res,next)=>{
-    res.end('Deleting the Dish' + req.params.dishId);
-})
+                            // app.delete('/dishes/:dishId',(req,res,next)=>{
+                            //     res.end('Deleting the Dish' + req.params.dishId);
+                            // })
 
 app.use(express.static(__dirname+'/public'))
 
